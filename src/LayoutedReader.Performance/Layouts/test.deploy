@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<deploy>
+  <filter expr="[43,27].Contains(c.mvsituacao)">
+    <filter expr="c.mvcoobrigacao == 'SEM COOBRIGACAO'">
+      <make tipo="S" parte="C"/>
+    </filter>
+
+    <filter expr="c.mvcoobrigacao == 'INTEGRAL'">
+      <make tipo="I" parte="C"/>
+      <make tipo="I" parte="V"/>
+    </filter>
+
+    <special expr="c.MVLANC_COMPRADOR == 'COSTA'">
+      <make tipo="Y" parte="C"/>
+    </special>
+  </filter>
+</deploy>

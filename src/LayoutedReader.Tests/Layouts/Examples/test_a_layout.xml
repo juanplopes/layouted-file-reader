@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<layout>
+  <header name="ACUMMOV-DATULTMOV" type="date(yyyyMMdd)" />
+
+  <field name="MVTIPO-IF" type="string(5)" />
+  <field name="MVCOMPRADOR-CODIGO" type="number(8)" />
+  <field name="MVVENDEDOR-CODIGO" type="number(8)" />
+  <field name="MVIF-CODIGO" type="string(14)" />
+  <field name="MVDATA-EMISSAO" type="date(yyyyMMdd)" />
+  <field name="MVDATA-VENCIMENTO" type="date(yyyyMMdd)" />
+  <field name="MVCOOBRIGACAO" type="string(15)" />
+  <field name="MVOPERACAO-DATA" type="date(yyyyMMdd)" />
+  <field name="MVOPERACAO-CODIGO" type="number(4)" />
+  <field name="MVSITUACAO" type="number(3)" />
+  <field name="MVOPERACAO-NUMERO" type="number(16)" />
+  <field name="MVOPERACAO-ORIGINAL" type="number(16)" />
+  <field name="MVVALOR-NOMINAL" type="number(10,8)" />
+  <field name="MVQUANTIDADE" type="number(14)" />
+
+  <field name="MVVALOR-FINANCEIRO" type="number(14,2)" />
+  <field name="MVMODALIDADE-LIQUIDACAO" type="number(1)" />
+  <field name="MVDATA-LIQUIDACAO" type="date(yyyyMMdd)" />
+  <field name="MVBCOLIQ-COMPRADOR" type="number(8)" />
+  <field name="MVBCOLIQ-VENDEDOR" type="number(8)" />
+
+  <field name="MVLANC-COMPRADOR" type="string(6)" />
+  <field name="MVDATA-LANC-COMPRADOR" type="date(yyyyMMddHHmmss)" />
+  <field name="MVLANC-VENDEDOR" type="string(6)" />
+  <field name="MVDATA-LANC-VENDEDOR" type="date(yyyyMMddHHmmss)" />
+  <field name="MVDATA-COMPROMISSO-IDA" type="number(8)" />
+  <field name="MVDATA-COMPROMISSO-VOLTA" type="number(8)" />
+</layout>

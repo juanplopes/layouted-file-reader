@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<deploy>
+  <filter expr="c.prop in (1,2,3)">
+    <special expr="c.atv == 'ASD'">
+      <make tipo="R" parte="C"/>
+    </special>   
+
+    <filter expr="c.op == 'A'">
+      <make tipo="R" parte="C"/>
+      <make tipo="T" parte="V"/>
+      <make tipo="T" parte="C"/>
+    </filter>
+
+    <filter expr="c.dc == 'Q' and c.op=='B'">
+      <make tipo="R" parte="C"/>
+      <make tipo="T" parte="V"/>
+      <make tipo="T" parte="C"/>
+    </filter>
+
+    <filter expr="c.op == 'B'">
+      <make tipo="T" parte="V"/>
+      <make tipo="T" parte="C"/>
+    </filter>
+
+    
+    <make tipo="K" parte="M"/>
+  </filter>
+</deploy>

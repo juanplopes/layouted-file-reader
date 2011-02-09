@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<index>
+  <file name="A.txt" layout="layouts\A.xml"/>
+  <file name="B.txt" layout="layouts\B.xml"/>
+</index>
+  

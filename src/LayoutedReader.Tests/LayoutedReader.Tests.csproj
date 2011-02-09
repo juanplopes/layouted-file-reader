@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{1EC9CA6D-E7B4-476D-AA0B-1DBFCA798BB3}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LayoutedReader.Tests</RootNamespace>
+    <AssemblyName>LayoutedReader.Tests</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\tests\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.5.8.10295, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpTestsEx, Version=1.1.1.0, Culture=neutral, PublicKeyToken=8c60d8070630b1c1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\SharpTestsEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple, Version=3.5.0.832, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="Filters\BooExpressionTests.cs" />
+    <Compile Include="Layouts\LayoutLoaderWithDeployTests.cs" />
+    <Compile Include="Layouts\LayoutLoaderTests.cs" />
+    <Compile Include="Layouts\C21CustodiaReduzidoFixture.cs" />
+    <Compile Include="Layouts\C21ReduzidoFixture.cs" />
+    <Compile Include="Layouts\Examples\SampleLayouts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SampleLayouts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Layouts\SampleFilterFixture.cs" />
+    <Compile Include="Types\ConstantTests.cs" />
+    <Compile Include="Types\AsStringFormatterTests.cs" />
+    <Compile Include="Types\DateTypeTests.cs" />
+    <Compile Include="Layouts\FieldTests.cs" />
+    <Compile Include="Layouts\LayoutSerializationTests.cs" />
+    <Compile Include="Types\NumberTypeTests.cs" />
+    <Compile Include="Infra\ParametersTests.cs" />
+    <Compile Include="ValueBagTests.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Types\StringTypeTests.cs" />
+    <Compile Include="Infra\StringWalkerTests.cs" />
+    <Compile Include="Infra\TypeConvertersTests.cs" />
+    <Compile Include="Infra\TypeResolverTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LayoutedReader\LayoutedReader.csproj">
+      <Project>{2035D825-0CE5-485E-BD7A-BCE1FA59ABB2}</Project>
+      <Name>Cetip.FileReader</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Layouts\Examples\SampleLayouts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>SampleLayouts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Layouts\Examples\test_a_deploy.xml" />
+    <Content Include="Layouts\Examples\test_b_deploy.xml" />
+    <Content Include="Layouts\Examples\index_deploy.xml" />
+    <Content Include="Layouts\Examples\SampleFilters.xml" />
+    <Content Include="Layouts\Examples\test_b_layout.xml" />
+    <Content Include="Layouts\Examples\test_a_layout.xml" />
+    <Content Include="Layouts\Examples\test_a.txt" />
+    <Content Include="Layouts\Examples\test_b.txt" />
+    <Content Include="Layouts\Examples\index.xml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,4 @@
+﻿import System
+
+static def evaluate(c as duck) as bool: 
+	return {0};

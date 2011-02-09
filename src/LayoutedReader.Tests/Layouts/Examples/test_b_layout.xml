@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<layout>
+  <header name="DCTIPO-REG-H" type="string(1)" />
+  <header name="DCDATULTMOV" type="date(yyyyMMdd)" />
+  <header name="DCNUMDIASUTEIS" type="number(2)" />
+  <header name="FILLER" type="string(112)" />
+
+  <field name="DCTIPO-REG-D" type="string(1)" />
+  <field name="DCDATOP" type="date(yyyyMMdd)" />
+  <field name="DCDETENTOR" type="number(8)" />
+  <field name="DCTIPOIF" type="string(5)" />
+  <field name="DCIF" type="string(14)" />
+  <field name="DCQUANTIDADE" type="number(15)" />
+  <field name="DCVALORNOMINAL" type="number(18)" />
+  <field name="DCVALORJUROSDIA" type="number(18)" />
+  <field name="DCPUCURVA" type="number(18)" />
+  <field name="DCVALOR" type="number(18)" />
+</layout>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2035D825-0CE5-485E-BD7A-BCE1FA59ABB2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LayoutedReader</RootNamespace>
+    <AssemblyName>LayoutedReader</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Boo, Version=2.0.9.4, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple, Version=3.5.0.832, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Simple.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\GlobalInfo.cs">
+      <Link>Properties\GlobalInfo.cs</Link>
+    </Compile>
+    <Compile Include="Filters\TrueFilter.cs" />
+    <Compile Include="Layouts\BaseField.cs" />
+    <Compile Include="Layouts\DeployContext.cs" />
+    <Compile Include="Layouts\Action.cs" />
+    <Compile Include="Layouts\DeployContext.print.cs" />
+    <Compile Include="Layouts\FileLayoutException.cs" />
+    <Compile Include="Layouts\FileIndex.cs" />
+    <Compile Include="Layouts\FileMapping.cs" />
+    <Compile Include="Filters\BooExpression.cs" />
+    <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Filters\Scripts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Scripts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Filters\ValueBagFu.cs" />
+    <Compile Include="Layouts\Filter.cs" />
+    <Compile Include="Layouts\Header.cs" />
+    <Compile Include="Layouts\ImportedFile.cs" />
+    <Compile Include="Infra\IFileLocator.cs" />
+    <Compile Include="Infra\FileLocator.cs" />
+    <Compile Include="Layouts\FileLoader.cs" />
+    <Compile Include="Layouts\RecordContext.cs" />
+    <Compile Include="Layouts\RecordEnumeration.cs" />
+    <Compile Include="Types\NullFormatter.cs" />
+    <Compile Include="ValueItem.cs" />
+    <Compile Include="ValueBag.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Layouts\Field.cs" />
+    <Compile Include="Types\AsStringFormatter.cs" />
+    <Compile Include="Types\DirectFormatter.cs" />
+    <Compile Include="Types\IFormatter.cs" />
+    <Compile Include="Infra\TypeResolver.cs" />
+    <Compile Include="Types\IReader.cs" />
+    <Compile Include="Layouts\Layout.cs" />
+    <Compile Include="Types\ConstantType.cs" />
+    <Compile Include="Types\StringType.cs" />
+    <Compile Include="Types\DateType.cs" />
+    <Compile Include="Types\NumberType.cs" />
+    <Compile Include="Infra\ParamsExtraction.cs" />
+    <Compile Include="Infra\Parameters.cs" />
+    <Compile Include="Infra\StringWalker.cs" />
+    <Compile Include="Infra\TypeConverters.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Filters\Boo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Filters\Scripts.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Scripts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
