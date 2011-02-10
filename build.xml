@@ -25,8 +25,8 @@
   <Target Name="GenerateAssemblyInfo">
     <AssemblyInfo CodeLanguage="CS"
                OutputFile="$(SourceDir)\GlobalInfo.cs"
-               AssemblyCompany="Living Consultoria"
-               AssemblyProduct="Projeto CETIP"
+               AssemblyCompany="Juan Lopes"
+               AssemblyProduct="Layouted File Reader"
                AssemblyTrademark=""
                ComVisible="false"
                CLSCompliant="false"
