@@ -14,14 +14,21 @@ namespace LayoutedReader.Infra
             this.index = Path.GetFullPath(index);
         }
 
-        public Stream Open(string file)
+        public Stream OpenRelative(string file)
         {
-            return File.OpenRead(Path.Combine(Path.GetDirectoryName(index), file));
+            return OpenAny(Path.Combine(Path.GetDirectoryName(index), file));
         }
 
         public Stream OpenIndex()
         {
-            return File.OpenRead(index);
+            return OpenAny(index);
         }
+
+
+        public Stream OpenAny(string file)
+        {
+            return File.OpenRead(file);
+        }
+
     }
 }

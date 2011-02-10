@@ -27,53 +27,53 @@ namespace LayoutedReader.Tests.Layouts
         {
             var fs = new Mock<IFileLocator>();
             fs.Setup(x => x.OpenIndex()).Returns(() => StreamFor(SampleLayouts.index_deploy));
-            fs.Setup(x => x.Open(@"layouts\A.xml")).Returns(() => StreamFor(SampleLayouts.test_a_layout));
-            fs.Setup(x => x.Open(@"layouts\B.xml")).Returns(() => StreamFor(SampleLayouts.test_b_layout));
-            fs.Setup(x => x.Open(@"deploys\Ad.xml")).Returns(() => StreamFor(SampleLayouts.test_a_deploy));
-            fs.Setup(x => x.Open(@"deploys\Bd.xml")).Returns(() => StreamFor(SampleLayouts.test_b_deploy));
-            fs.Setup(x => x.Open(@"A.txt")).Returns(() => StreamFor(SampleLayouts.test_a));
-            fs.Setup(x => x.Open(@"B.txt")).Returns(() => StreamFor(SampleLayouts.test_b));
-            fs.Setup(x => x.Open(@"B2.txt")).Returns(() => StreamFor(SampleLayouts.test_b));
+            fs.Setup(x => x.OpenRelative(@"layouts\A.xml")).Returns(() => StreamFor(SampleLayouts.test_a_layout));
+            fs.Setup(x => x.OpenRelative(@"layouts\B.xml")).Returns(() => StreamFor(SampleLayouts.test_b_layout));
+            fs.Setup(x => x.OpenRelative(@"deploys\Ad.xml")).Returns(() => StreamFor(SampleLayouts.test_a_deploy));
+            fs.Setup(x => x.OpenRelative(@"deploys\Bd.xml")).Returns(() => StreamFor(SampleLayouts.test_b_deploy));
+            fs.Setup(x => x.OpenAny(@"A.txt")).Returns(() => StreamFor(SampleLayouts.test_a));
+            fs.Setup(x => x.OpenAny(@"B.txt")).Returns(() => StreamFor(SampleLayouts.test_b));
+            fs.Setup(x => x.OpenAny(@"B2.txt")).Returns(() => StreamFor(SampleLayouts.test_b));
 
             loader = new FileLoader(fs.Object);
         }
 
         [Test]
-        public void can_open_c21_file_with_correct_layout()
+        public void can_open_A_file_with_correct_layout()
         {
-            var c21 = loader.Read(@"A.txt").ToList();
-            c21.Count.Should().Be(49);
-            c21[0].Record.Count.Should().Be(25);
+            var A = loader.Read(@"A.txt").ToList();
+            A.Count.Should().Be(49);
+            A[0].Record.Count.Should().Be(25);
         }
 
         [Test]
-        public void when_opening_c21_file_filter_correct_sem_coobrigacao()
+        public void when_opening_A_file_filter_correct_sem_coobrigacao()
         {
-            var c21 = loader.Read(@"A.txt").ToList();
-            var sem = c21.Where(x => x.Record.GetAs<string>("mvcoobrigacao") == "SEM COOBRIGACAO");
+            var A = loader.Read(@"A.txt").ToList();
+            var sem = A.Where(x => x.Record.GetAs<string>("mvcoobrigacao") == "SEM COOBRIGACAO");
             sem.Count().Should().Be(21);
             sem.Sum(x => x.Expanded.Count).Should().Be(21);
         }
 
         [Test]
-        public void when_opening_c21_file_filter_correct_integral()
+        public void when_opening_A_file_filter_correct_integral()
         {
-            var c21 = loader.Read(@"A.txt").ToList();
-            var com = c21.Where(x => x.Record.GetAs<string>("mvcoobrigacao") == "INTEGRAL");
+            var A = loader.Read(@"A.txt").ToList();
+            var com = A.Where(x => x.Record.GetAs<string>("mvcoobrigacao") == "INTEGRAL");
             com.Count().Should().Be(28);
             com.Sum(x => x.Expanded.Count).Should().Be(55);
 
-            var costa = c21.Where(x => x.Record.GetAs<string>("MVLANC_COMPRADOR") == "COSTA");
+            var costa = A.Where(x => x.Record.GetAs<string>("MVLANC_COMPRADOR") == "COSTA");
             costa.Count().Should().Be(1);
             costa.Sum(x => x.Expanded.Count).Should().Be(1);
         }
 
         [Test]
-        public void can_open_c21_custodia_file_with_correct_layout()
+        public void can_open_B_file_with_correct_layout()
         {
-            var c21 = loader.Read(@"B.txt").ToList();
-            c21.Count.Should().Be(49);
-            c21[0].Record.Count.Should().Be(10);
+            var A = loader.Read(@"B.txt").ToList();
+            A.Count.Should().Be(49);
+            A[0].Record.Count.Should().Be(10);
         }
 
         [Test]

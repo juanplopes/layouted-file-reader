@@ -15,7 +15,7 @@ using LayoutedReader.Tests.Layouts.Examples;
 namespace LayoutedReader.Tests.Layouts
 {
     [TestFixture]
-    public class C21CustodiaReduzidoFixture
+    public class BReduzidoFixture
     {
         private ImportedFile file;
         [TestFixtureSetUp]

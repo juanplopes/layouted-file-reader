@@ -29,7 +29,7 @@ namespace LayoutedReader.Layouts
         {
             if (file == null) return default(T);
 
-            using (var stream = locator.Open(file))
+            using (var stream = locator.OpenRelative(file))
                 return stream.AsXmlOf<T>();
         }
 
@@ -40,7 +40,7 @@ namespace LayoutedReader.Layouts
 
         public IEnumerable<DeployContext> PrivateRead(string file)
         {
-            using (var stream = locator.Open(file))
+            using (var stream = locator.OpenAny(file))
             {
                 var layout = OpenXml<Layout>(mappings.LayoutFor(file));
                 var deploy = OpenXml<Filter>(mappings.DeployFor(file));

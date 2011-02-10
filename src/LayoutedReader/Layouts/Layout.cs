@@ -55,13 +55,16 @@ namespace LayoutedReader.Layouts
 
         protected IEnumerable<ValueBag> ReadBody(TextReader reader)
         {
-            string line;
-            int count = 0;
-
-            while ((line = reader.ReadLine()) != null)
-                yield return Read(line, Fields, string.Format("line#{0}", ++count));
+            return EnumerateReader(reader).Select(
+                (x, i) => Read(x, Fields, string.Format("line#{0}", i + 1)));
         }
 
+        private IEnumerable<string> EnumerateReader(TextReader reader)
+        {
+            string line;
+            while ((line = reader.ReadLine()) != null)
+                yield return line;
+        }
 
 
         private static ValueBag Read<T>(string line, IEnumerable<T> fieldList, string identifier)

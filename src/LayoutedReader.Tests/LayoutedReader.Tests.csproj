@@ -68,8 +68,8 @@
     <Compile Include="Layouts\DeployerTests.cs" />
     <Compile Include="Layouts\LayoutLoaderWithDeployTests.cs" />
     <Compile Include="Layouts\LayoutLoaderTests.cs" />
-    <Compile Include="Layouts\C21CustodiaReduzidoFixture.cs" />
-    <Compile Include="Layouts\C21ReduzidoFixture.cs" />
+    <Compile Include="Layouts\BReduzidoFixture.cs" />
+    <Compile Include="Layouts\AReduzidoFixture.cs" />
     <Compile Include="Layouts\Examples\SampleLayouts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
