@@ -16,6 +16,7 @@ namespace LayoutedReader.Layouts
         public long StreamSize { get; private set; }
         public long EstimatedTotal { get; set; }
         public TimeSpan Elapsed { get; private set; }
+        public string Row { get; private set; }
 
         public double RecordSpeed
         {
@@ -49,9 +50,9 @@ namespace LayoutedReader.Layouts
             get { return new FileSize(StreamSize).InBestUnit(); }
         }
 
-        public RecordContext(ValueBag header, ValueBag record) : this(header, record, 0, 0, 0, 0, TimeSpan.Zero) { }
+        public RecordContext(ValueBag header, ValueBag record) : this("", header, record, 0, 0, 0, 0, TimeSpan.Zero) { }
 
-        public RecordContext(ValueBag header, ValueBag record, long count, long estimatedTotal, long streamPosition, long streamSize, TimeSpan elapsed)
+        public RecordContext(string row, ValueBag header, ValueBag record, long count, long estimatedTotal, long streamPosition, long streamSize, TimeSpan elapsed)
         {
             this.Header = header ?? new ValueBag();
             this.Record = record ?? new ValueBag();
@@ -60,6 +61,7 @@ namespace LayoutedReader.Layouts
             this.StreamSize = streamSize;
             this.EstimatedTotal = estimatedTotal;
             this.Elapsed = elapsed;
+            this.Row = row;
         }
 
         public static implicit operator RecordContext(ValueBag bag)

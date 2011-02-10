@@ -17,14 +17,14 @@ namespace LayoutedReader.Tests.Layouts
     [TestFixture]
     public class AReduzidoFixture
     {
-        private ImportedFile file;
+        private IList<RecordContext> file;
         [TestFixtureSetUp]
         public void Setup()
         {
             var layout = SimpleSerializer.Xml<Layout>()
                 .DeserializeTypedFromString(SampleLayouts.test_a_layout);
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(SampleLayouts.test_a)))
-                file = layout.ReadAll(stream);
+                file = layout.Read(stream).ToList();
         }
 
         static string[] columns = 
@@ -66,19 +66,19 @@ namespace LayoutedReader.Tests.Layouts
         [Test]
         public void must_have_49_records()
         {
-            file.Records.Count.Should().Be(49);
+            file.Count.Should().Be(49);
         }
 
         [Test]
         public void header_must_be_correct()
         {
-            file.Header["ACUMMOV-DATULTMOV"].Value.Should().Be(new DateTime(2010, 12, 03));
+            file[0].Header["ACUMMOV-DATULTMOV"].Value.Should().Be(new DateTime(2010, 12, 03));
         }
 
         [Test]
         public void record_1()
         {
-            AssertRow(file.Records[0],
+            AssertRow(file[0].Record,
                 "CCB", 18465008, 18465008, "10I00008111", new DateTime(2010, 09, 27),
                 new DateTime(2012, 10, 24), "INTEGRAL", new DateTime(2010, 12, 01), 0001, 043,
                 2010120119263637m, 0m, 0000002000m, 00000000000001m, 0000000000000000m,
@@ -89,7 +89,7 @@ namespace LayoutedReader.Tests.Layouts
         [Test]
         public void record_49()
         {
-            AssertRow(file.Records[48],
+            AssertRow(file[48].Record,
                 "CCB", 74220407, 74220005, "08H00018061", new DateTime(2008, 08, 15),
                 new DateTime(2011, 08, 01), "INTEGRAL", new DateTime(2010, 12, 01), 0074, 043,
                 2010113019254444m, 0m, 0000036110.1m, 00000000000001m, 00000000036110.10m,
@@ -102,14 +102,14 @@ namespace LayoutedReader.Tests.Layouts
         public void there_are_21_with_sem_coobrigacao()
         {
             var expr = new BooExpression("c.mvcoobrigacao == 'SEM COOBRIGACAO'");
-            file.Records.Where(x => expr.AppliesTo(x)).Count().Should().Be(21);
+            file.Where(x => expr.AppliesTo(x.Record)).Count().Should().Be(21);
         }
 
         [Test]
         public void there_are_9_with_mvdata_emissao_april()
         {
             var expr = new BooExpression("c.mvdata_emissao.Month == 4");
-            file.Records.Where(x => expr.AppliesTo(x)).Count().Should().Be(9);
+            file.Where(x => expr.AppliesTo(x.Record)).Count().Should().Be(9);
         }
 
 
@@ -117,7 +117,7 @@ namespace LayoutedReader.Tests.Layouts
         public void there_are_9_with_mvdata_emissao_2010_04_16()
         {
             var expr = new BooExpression("c.mvdata_emissao == DateTime(2010, 4, 16)");
-            file.Records.Where(x => expr.AppliesTo(x)).Count().Should().Be(9);
+            file.Where(x => expr.AppliesTo(x.Record)).Count().Should().Be(9);
         }
     }
 }
