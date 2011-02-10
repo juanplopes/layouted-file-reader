@@ -15,22 +15,25 @@ namespace LayoutedReader.Layouts
         public long StreamPosition { get; private set; }
         public long StreamSize { get; private set; }
         public long EstimatedTotal { get; set; }
+        public TimeSpan Elapsed { get; private set; }
 
-        public double RecordSpeed(TimeSpan time)
+        public double RecordSpeed
         {
-            return time.TotalSeconds > 0 ? Count / time.TotalSeconds : 0;
+            get { return Elapsed.TotalSeconds > 0 ? Count / Elapsed.TotalSeconds : 0; }
         }
 
-        public double StreamSpeed(TimeSpan time)
+        public double StreamSpeed
         {
-            return time.TotalSeconds > 0 ? StreamPosition / time.TotalSeconds : 0;
+            get { return Elapsed.TotalSeconds > 0 ? StreamPosition / Elapsed.TotalSeconds : 0; }
         }
 
-        public TimeSpan EstimatedTime(TimeSpan time)
+        public TimeSpan EstimatedTime
         {
-            
-            var speed = StreamSpeed(time);
-            return speed > 0 ? TimeSpan.FromSeconds((StreamSize - StreamPosition) / speed) : TimeSpan.FromSeconds(600000);
+            get
+            {
+                var speed = StreamSpeed;
+                return speed > 0 ? TimeSpan.FromSeconds((StreamSize - StreamPosition) / speed) : TimeSpan.FromSeconds(600000);
+            }
         }
 
         public double PercentageDone
@@ -46,9 +49,9 @@ namespace LayoutedReader.Layouts
             get { return new FileSize(StreamSize).InBestUnit(); }
         }
 
-        public RecordContext(ValueBag header, ValueBag record) : this(header, record, 0, 0, 0, 0) { }
+        public RecordContext(ValueBag header, ValueBag record) : this(header, record, 0, 0, 0, 0, TimeSpan.Zero) { }
 
-        public RecordContext(ValueBag header, ValueBag record, long count, long estimatedTotal, long streamPosition, long streamSize)
+        public RecordContext(ValueBag header, ValueBag record, long count, long estimatedTotal, long streamPosition, long streamSize, TimeSpan elapsed)
         {
             this.Header = header ?? new ValueBag();
             this.Record = record ?? new ValueBag();
@@ -56,6 +59,7 @@ namespace LayoutedReader.Layouts
             this.StreamPosition = streamPosition;
             this.StreamSize = streamSize;
             this.EstimatedTotal = estimatedTotal;
+            this.Elapsed = elapsed;
         }
 
         public static implicit operator RecordContext(ValueBag bag)

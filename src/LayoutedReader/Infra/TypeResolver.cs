@@ -13,7 +13,7 @@ namespace LayoutedReader.Infra
         static TypeResolver defaultInstance = new TypeResolver(TypeConverters.Default);
         public static TypeResolver Default { get { return defaultInstance; } }
 
-        static Regex regex = new Regex(@"^{0}(\({0}\)\s*)?$".AsFormat(@"(?<p>.+?)"));
+        static Regex regex = new Regex(@"^{0}(\({0}\)\s*)?$".AsFormatFor(@"(?<p>.+?)"));
 
         TypeConverters converters;
         public TypeResolver(TypeConverters converters)
@@ -37,7 +37,7 @@ namespace LayoutedReader.Infra
             if (identifier == null) return null;
             var match = regex.Match(identifier).Groups["p"];
             if (!match.Success)
-                throw new ArgumentException("the type '{0}' is invalid".AsFormat(identifier));
+                throw new ArgumentException("the type '{0}' is invalid".AsFormatFor(identifier));
 
             var type = match.Captures[0].Value;
 

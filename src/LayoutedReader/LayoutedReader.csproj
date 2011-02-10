@@ -78,8 +78,10 @@
     <Compile Include="Infra\IFileLocator.cs" />
     <Compile Include="Infra\FileLocator.cs" />
     <Compile Include="Layouts\FileLoader.cs" />
+    <Compile Include="Layouts\Deployer.cs" />
     <Compile Include="Layouts\RecordContext.cs" />
-    <Compile Include="Layouts\RecordEnumeration.cs" />
+    <Compile Include="Layouts\DisposableEnumeration.cs" />
+    <Compile Include="Layouts\XmlHelpers.cs" />
     <Compile Include="Types\NullFormatter.cs" />
     <Compile Include="ValueItem.cs" />
     <Compile Include="ValueBag.cs" />

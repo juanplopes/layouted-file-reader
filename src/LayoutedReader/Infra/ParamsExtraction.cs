@@ -34,7 +34,7 @@ namespace LayoutedReader.Infra
             }
             catch(FormatException e)
             {
-                throw new ArgumentException("couldn't format '{0}' as '{1}'".AsFormat(str, type), e);
+                throw new ArgumentException("couldn't format '{0}' as '{1}'".AsFormatFor(str, type), e);
             }
             return true;
 
@@ -55,7 +55,7 @@ namespace LayoutedReader.Infra
         {
             T result;
             if (!TryGet(position, out result))
-                throw new ArgumentOutOfRangeException("required positional parameter {0} not found".AsFormat(position));
+                throw new ArgumentOutOfRangeException("required positional parameter {0} not found".AsFormatFor(position));
             return result;
         }
 

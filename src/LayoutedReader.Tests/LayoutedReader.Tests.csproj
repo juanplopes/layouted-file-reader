@@ -65,6 +65,7 @@
       <Link>Properties\GlobalInfo.cs</Link>
     </Compile>
     <Compile Include="Filters\BooExpressionTests.cs" />
+    <Compile Include="Layouts\DeployerTests.cs" />
     <Compile Include="Layouts\LayoutLoaderWithDeployTests.cs" />
     <Compile Include="Layouts\LayoutLoaderTests.cs" />
     <Compile Include="Layouts\C21CustodiaReduzidoFixture.cs" />

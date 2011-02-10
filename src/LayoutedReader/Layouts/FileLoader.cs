@@ -15,60 +15,39 @@ namespace LayoutedReader.Layouts
     {
         IFileLocator locator;
         FileIndex mappings;
-        string directory;
 
-        public FileLoader(string indexFile) : this(new FileLocator(), indexFile) { }
+        public FileLoader(string indexFile) : this(new FileLocator(indexFile)) { }
 
-        public FileLoader(IFileLocator locator, string indexFile)
+        public FileLoader(IFileLocator locator)
         {
-            indexFile = Path.GetFullPath(indexFile);
-            directory = Path.GetDirectoryName(indexFile);
             this.locator = locator;
-
-            using (var file = locator.Open(indexFile))
+            using (var file = locator.OpenIndex())
                 this.mappings = (FileIndex)new XmlSerializer(typeof(FileIndex)).Deserialize(file);
         }
 
-        private Layout OpenLayout(string layoutFile)
+        private T OpenXml<T>(string file)
         {
-            if (layoutFile == null) return new Layout();
+            if (file == null) return default(T);
 
-            using (var layoutStream = locator.Open(Path.Combine(directory, layoutFile)))
-                return (Layout)new XmlSerializer(typeof(Layout)).Deserialize(layoutStream);
+            using (var stream = locator.Open(file))
+                return stream.AsXmlOf<T>();
         }
 
-        private Filter OpenDeploy(string deployFile)
+        public DisposableEnumeration<DeployContext> Read(string file)
         {
-            if (deployFile == null) return new Filter();
-
-            using (var deployStream = locator.Open(Path.Combine(directory, deployFile)))
-                return (Filter)new XmlSerializer(typeof(Filter)).Deserialize(deployStream);
+            return new DisposableEnumeration<DeployContext>(PrivateRead(file));
         }
 
-        public RecordEnumeration Read(string file)
-        {
-            return new RecordEnumeration(Path.GetFileName(file), ReadInternal(file));
-        }
-
-        private IEnumerable<DeployContext> ReadInternal(string file)
+        public IEnumerable<DeployContext> PrivateRead(string file)
         {
             using (var stream = locator.Open(file))
             {
-                var layout = OpenLayout(mappings.LayoutFor(file));
-                var deploy = OpenDeploy(mappings.DeployFor(file));
+                var layout = OpenXml<Layout>(mappings.LayoutFor(file));
+                var deploy = OpenXml<Filter>(mappings.DeployFor(file));
 
-                var filename = Path.GetFileName(file);
-                
-                var stopwatch = Stopwatch.StartNew();
-                int expandedCount = 0;
-                foreach (var ctx in layout.Read(stream)) {
-                    var expanded = deploy.Evaluate(ctx).ToArray();
-                    expandedCount += expanded.Length;
-                    yield return new DeployContext(ctx, filename, expanded , stopwatch.Elapsed, expandedCount);
-                }
+                foreach (var ctx in new Deployer(layout, deploy).Read(stream))
+                    yield return ctx;
             }
-
         }
-
     }
 }

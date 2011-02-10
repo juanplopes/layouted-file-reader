@@ -7,6 +7,7 @@ using LayoutedReader.Infra;
 using System.IO;
 using LayoutedReader.Layouts;
 using System.Threading;
+using System.Diagnostics;
 
 namespace LayoutedReader.Layouts
 {
@@ -41,8 +42,9 @@ namespace LayoutedReader.Layouts
 
             long estimatedTotal = stream.Length / (Fields.Sum(x => x.Length) + 1);
 
+            var stopwatch = Stopwatch.StartNew();
             foreach (var record in ReadBody(reader))
-                yield return new RecordContext(header, record, ++count, estimatedTotal, stream.Position, stream.Length);
+                yield return new RecordContext(header, record, ++count, estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed);
         }
 
         protected ValueBag ReadHeader(TextReader reader)

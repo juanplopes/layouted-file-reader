@@ -8,6 +8,7 @@ namespace LayoutedReader.Infra
 {
     public interface IFileLocator
     {
+        Stream OpenIndex();
         Stream Open(string file);
     }
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using LayoutedReader.Layouts;
 using System.Threading;
 using System.IO;
+using System.Collections.Generic;
 
 namespace LayoutedReader.Performance
 {
@@ -13,19 +14,16 @@ namespace LayoutedReader.Performance
         {
             var loader = new FileLoader("Layouts/index.xml");
 
-            Console.Write("{0,-20} ", "filename");
             DeployContext.PrintHeader();
 
-            Test(loader.Read("Files/C21.txt"));
+            Test(loader.Read("Files/test.txt"));
             //Test(loader.Read("Files/C21C.txt"));
             Console.ReadLine();
         }
 
 
-        public static void Test(RecordEnumeration items)
+        public static void Test(IEnumerable<DeployContext> items)
         {
-            Console.Write("{0,-20} ", items.Filename);
-
             foreach (var item in items)
                 item.PrintInfo();
 

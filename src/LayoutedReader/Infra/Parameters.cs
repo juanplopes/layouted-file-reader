@@ -10,7 +10,7 @@ namespace LayoutedReader.Infra
     public class Parameters
     {
         static Regex DEFAULT_REGEX =
-            new Regex("^{0}?(,{0})*$".AsFormat(@"\s*(?<p>[^,]*?)\s*"),
+            new Regex("^{0}?(,{0})*$".AsFormatFor(@"\s*(?<p>[^,]*?)\s*"),
                 RegexOptions.Compiled);
         public static Parameters Default
         {

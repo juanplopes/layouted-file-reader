@@ -5,18 +5,15 @@ using System.Text;
 
 namespace LayoutedReader.Layouts
 {
-    public class RecordEnumeration : IDisposable, IEnumerable<DeployContext>
+    public class DisposableEnumeration<T> : IDisposable, IEnumerable<T>
     {
-        string filename;
-        public string Filename { get { return filename; } }
-        IEnumerable<DeployContext> enumerable;
-        public RecordEnumeration(string filename, IEnumerable<DeployContext> enumerable)
+        IEnumerable<T> enumerable;
+        public DisposableEnumeration(IEnumerable<T> enumerable)
         {
             this.enumerable = enumerable;
-            this.filename = filename;
         }
 
-        public IEnumerator<DeployContext> GetEnumerator()
+        public IEnumerator<T> GetEnumerator()
         {
             return enumerable.GetEnumerator();
         }
@@ -28,7 +25,8 @@ namespace LayoutedReader.Layouts
 
         public void Dispose()
         {
-            (enumerable as IDisposable).Dispose();
+            if (enumerable is IDisposable)
+                (enumerable as IDisposable).Dispose();
         }
     }
 }

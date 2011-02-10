@@ -25,7 +25,7 @@ namespace LayoutedReader.Layouts
             var mapping = Mappings.FirstOrDefault(x =>
                 fileName.Equals(x.Name, StringComparison.InvariantCultureIgnoreCase));
             if (mapping == null)
-                throw new FileNotFoundException("no mapping for file: {0}".AsFormat(fileName));
+                throw new FileNotFoundException("no mapping for file: {0}".AsFormatFor(fileName));
             return mapping;
         }
 
