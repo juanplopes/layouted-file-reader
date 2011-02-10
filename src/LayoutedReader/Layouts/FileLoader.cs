@@ -33,9 +33,9 @@ namespace LayoutedReader.Layouts
                 return stream.AsXmlOf<T>();
         }
 
-        public DisposableEnumeration<DeployContext> Read(string file)
+        public DisposableEnumerable<DeployContext> Read(string file)
         {
-            return new DisposableEnumeration<DeployContext>(PrivateRead(file));
+            return new DisposableEnumerable<DeployContext>(PrivateRead(file));
         }
 
         public IEnumerable<DeployContext> PrivateRead(string file)
