@@ -24,12 +24,14 @@ namespace LayoutedReader.Layouts
 
         public IEnumerable<DeployContext> Read(Stream stream)
         {
-            int expandedCount = 0;
+            long expandedCount = 0;
             foreach (var ctx in layout.Read(stream))
             {
                 var expanded = filter.Evaluate(ctx).ToArray();
                 expandedCount += expanded.Length;
-                yield return new DeployContext(ctx, expanded, expandedCount);
+              
+                var deployed = new DeployContext(ctx, expanded, expandedCount);
+                yield return deployed;
             }
         }
     }
