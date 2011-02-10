@@ -38,13 +38,12 @@ namespace LayoutedReader.Layouts
         {
             var reader = new StreamReader(stream);
             var header = ReadHeader(reader);
-            int count = 0;
 
             long estimatedTotal = stream.Length / (Fields.Sum(x => x.Length) + 1);
 
             var stopwatch = Stopwatch.StartNew();
-            foreach (var record in ReadBody(reader))
-                yield return new RecordContext(header, record, ++count, estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed);
+            return ReadBody(reader).Select((x,i)=>
+                new RecordContext(header, x, i+1, estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed));
         }
 
         protected ValueBag ReadHeader(TextReader reader)
