@@ -5,10 +5,12 @@ using System.Text;
 
 namespace LayoutedReader.Layouts
 {
-    public class DisposableEnumerable<T> : IDisposable, IEnumerable<T>
+    public class FileContext<T> : IDisposable, IEnumerable<T>
     {
+
         IEnumerable<T> enumerable;
-        public DisposableEnumerable(IEnumerable<T> enumerable)
+
+        public FileContext(IEnumerable<T> enumerable)
         {
             this.enumerable = enumerable;
         }

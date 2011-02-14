@@ -12,7 +12,7 @@ namespace LayoutedReader.Filters
 {
     public class BooExpression : IFilter
     {
-        Func<ValueBag[], bool> evaluator;
+        Func<IEnumerable<ValueBag>, bool> evaluator;
 
         static BooExpression()
         {
@@ -37,6 +37,11 @@ namespace LayoutedReader.Filters
         }
 
         public bool AppliesTo(params ValueBag[] bags)
+        {
+            return AppliesTo(bags.AsEnumerable());
+        }
+
+        public bool AppliesTo(IEnumerable<ValueBag> bags)
         {
             return evaluator(bags);
         }

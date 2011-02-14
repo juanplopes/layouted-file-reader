@@ -7,6 +7,6 @@ namespace LayoutedReader.Filters
 {
     public interface IFilter
     {
-        bool AppliesTo(params ValueBag[] bags);
+        bool AppliesTo(IEnumerable<ValueBag> bags);
     }
 }

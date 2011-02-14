@@ -13,7 +13,18 @@ namespace LayoutedReader
     {
         public ValueBag() : base(KeyComparer.Instance) { }
         public ValueBag(SerializationInfo info, StreamingContext context) : base(info, context) { }
+
+
         public ValueBag(params IDictionary<string, ValueItem>[] dictionaries)
+            : this((IEnumerable<IDictionary<string, ValueItem>>)dictionaries)
+        {
+
+        }
+
+        public ValueBag(IEnumerable<ValueBag> dictionaries)
+            : this(dictionaries.Cast<IDictionary<string, ValueItem>>()) { }
+
+        public ValueBag(IEnumerable<IDictionary<string, ValueItem>> dictionaries)
             : this()
         {
             foreach (var dictionary in dictionaries.Where(x => x != null))

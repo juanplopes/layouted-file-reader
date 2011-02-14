@@ -43,7 +43,7 @@ namespace LayoutedReader.Layouts
 
         private bool AppliesTo(RecordContext context)
         {
-            return filter.AppliesTo(context.Record, context.Header);
+            return filter.AppliesTo(context.GetBags());
         }
 
         public IEnumerable<ValueBag> Evaluate(RecordContext context)

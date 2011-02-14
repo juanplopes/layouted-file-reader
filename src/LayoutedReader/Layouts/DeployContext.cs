@@ -11,7 +11,7 @@ namespace LayoutedReader.Layouts
         public long ExpandedCount { get; private set; }
 
         public DeployContext(RecordContext context, IList<ValueBag> expanded, long expandedCount)
-            : base(context.Row, context.Header, context.Record, context.Count, context.EstimatedTotal, context.StreamPosition, context.StreamSize, context.Elapsed)
+            : base(context.HeaderContext, context.Row, context.Record, context.Count, context.EstimatedTotal, context.StreamPosition, context.StreamSize, context.Elapsed)
         {
             this.Expanded = expanded;
             this.ExpandedCount = expandedCount;

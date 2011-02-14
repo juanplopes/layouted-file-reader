@@ -8,10 +8,10 @@ namespace LayoutedReader.Filters
 {
     public class ValueBagFu : IQuackFu
     {
-        public ValueBag[] Bags { get; private set; }
+        public IEnumerable<ValueBag> Bags { get; private set; }
         #region IQuackFu Members
 
-        public ValueBagFu(params ValueBag[] bags)
+        public ValueBagFu(IEnumerable<ValueBag> bags)
         {
             this.Bags = bags;
         }
@@ -19,7 +19,7 @@ namespace LayoutedReader.Filters
         public object QuackGet(string name, object[] parameters)
         {
             ValueItem item;
-            foreach(var bag in Bags)
+            foreach (var bag in Bags)
                 if (bag.TryGetValue(name, out item)) return item.Value;
 
             return null;

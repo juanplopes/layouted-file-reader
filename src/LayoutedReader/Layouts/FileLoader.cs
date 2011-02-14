@@ -33,12 +33,13 @@ namespace LayoutedReader.Layouts
                 return stream.AsXmlOf<T>();
         }
 
-        public DisposableEnumerable<DeployContext> Read(string file)
+
+        public FileContext<DeployContext> Read(string file)
         {
-            return new DisposableEnumerable<DeployContext>(PrivateRead(file));
+            return new FileContext<DeployContext>(ReadPrivate(file));
         }
 
-        public IEnumerable<DeployContext> PrivateRead(string file)
+        private IEnumerable<DeployContext> ReadPrivate(string file)
         {
             using (var stream = locator.OpenAny(file))
             {

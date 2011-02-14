@@ -23,7 +23,7 @@ namespace LayoutedReader.Layouts
 
         public ValueBag Act(RecordContext context)
         {
-            var bag = new ValueBag(context.Header, context.Record);
+            var bag = new ValueBag(context.GetBags());
             bag.Set("tipoOperacao", TipoOperacao);
             bag.Set("parteCobrada", ParteCobrada);
             return bag;

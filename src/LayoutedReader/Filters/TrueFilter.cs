@@ -9,7 +9,7 @@ namespace LayoutedReader.Filters
     {
         public static readonly TrueFilter Instance = new TrueFilter();
 
-        public bool AppliesTo(params ValueBag[] bags)
+        public bool AppliesTo(IEnumerable<ValueBag> bags)
         {
             return true;
         }

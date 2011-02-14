@@ -26,25 +26,24 @@ namespace LayoutedReader.Layouts
             Fields = new List<Field>();
         }
 
-        public IEnumerable<RecordContext> Read(Stream stream)
+        public FileContext<RecordContext> Read(Stream stream)
         {
-            var reader = new StreamReader(stream);
-            var header = ReadHeader(reader);
-
             long estimatedTotal = stream.Length / (Fields.Sum(x => x.Length) + 1);
-
+            
             var stopwatch = Stopwatch.StartNew();
 
-            return EnumerateReader(reader).Select((row, i) =>
-                new RecordContext(row, header, Read(row, Fields, string.Format("row#{0}", i + 1)), i + 1,
-                    estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed));
+            var reader = new StreamReader(stream);
+            var headerRow = reader.ReadLine();
+            var header = Read(headerRow, HeaderFields, "header");
+            var headerCtx = new RecordContext(null, headerRow, header, 0, estimatedTotal, 
+                stream.Position, stream.Length, stopwatch.Elapsed);
 
-        }
 
-        protected ValueBag ReadHeader(TextReader reader)
-        {
-            var line = reader.ReadLine();
-            return Read(line, HeaderFields, "header");
+
+            return new FileContext<RecordContext>(
+                EnumerateReader(reader).Select((row, i) =>
+                new RecordContext(headerCtx, row, Read(row, Fields, string.Format("row#{0}", i + 1)), i + 1, estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed)));
+
         }
 
         private IEnumerable<string> EnumerateReader(TextReader reader)

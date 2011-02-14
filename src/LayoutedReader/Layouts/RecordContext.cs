@@ -9,7 +9,12 @@ namespace LayoutedReader.Layouts
 {
     public class RecordContext
     {
-        public ValueBag Header { get; private set; }
+        public RecordContext HeaderContext { get; set; }
+        public ValueBag Header
+        {
+            get { return HeaderContext != null ? HeaderContext.Record : null; }
+        }
+
         public ValueBag Record { get; private set; }
         public long Count { get; private set; }
         public long StreamPosition { get; private set; }
@@ -50,11 +55,11 @@ namespace LayoutedReader.Layouts
             get { return new FileSize(StreamSize).InBestUnit(); }
         }
 
-        public RecordContext(ValueBag header, ValueBag record) : this("", header, record, 0, 0, 0, 0, TimeSpan.Zero) { }
+        public RecordContext(RecordContext header, ValueBag record) : this(header, string.Empty, record, 0, 0, 0, 0, TimeSpan.Zero) { }
 
-        public RecordContext(string row, ValueBag header, ValueBag record, long count, long estimatedTotal, long streamPosition, long streamSize, TimeSpan elapsed)
+        public RecordContext(RecordContext header, string row, ValueBag record, long count, long estimatedTotal, long streamPosition, long streamSize, TimeSpan elapsed)
         {
-            this.Header = header ?? new ValueBag();
+            this.HeaderContext = header;
             this.Record = record ?? new ValueBag();
             this.Count = count;
             this.StreamPosition = streamPosition;
@@ -69,6 +74,14 @@ namespace LayoutedReader.Layouts
             return new RecordContext(null, bag);
         }
 
+        public IEnumerable<ValueBag> GetBags()
+        {
+            if (Record != null)
+                yield return Record;
+            if (HeaderContext != null)
+                foreach (var bag in HeaderContext.GetBags())
+                    yield return bag;
+        }
 
     }
 }
