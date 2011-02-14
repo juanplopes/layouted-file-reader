@@ -17,14 +17,14 @@ namespace LayoutedReader.Tests.Layouts
     [TestFixture]
     public class BReduzidoFixture
     {
-        private IList<RecordContext> file;
+        private FileContext<RecordContext> file;
         [TestFixtureSetUp]
         public void Setup()
         {
             var layout = SimpleSerializer.Xml<Layout>()
                 .DeserializeTypedFromString(SampleLayouts.test_b_layout);
             using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(SampleLayouts.test_b)))
-                file = layout.Read(stream).ToList();
+                file = layout.Read(stream).CompleteInitialize();
         }
 
         static string[] columns = 
@@ -43,21 +43,21 @@ namespace LayoutedReader.Tests.Layouts
         [Test]
         public void must_have_49_records()
         {
-            file.Count.Should().Be(49);
+            file.Count().Should().Be(49);
         }
 
         [Test]
         public void header_must_be_correct()
         {
-            file[0].Header["DCTIPO-REG-H"].Value.Should().Be("0");
-            file[0].Header["DCDATULTMOV"].Value.Should().Be(new DateTime(2010, 12, 03));
-            file[0].Header["DCNUMDIASUTEIS"].Value.Should().Be(3);
+            file.HeaderContext.Record["DCTIPO-REG-H"].Value.Should().Be("0");
+            file.HeaderContext.Record["DCDATULTMOV"].Value.Should().Be(new DateTime(2010, 12, 03));
+            file.HeaderContext.Record["DCNUMDIASUTEIS"].Value.Should().Be(3);
         }
 
         [Test]
         public void record_1()
         {
-            AssertRow(file[0].Record,
+            AssertRow(file.First().Record,
                 "1", new DateTime(2010, 12, 01), 74870008, "CCB", "05L00000142", 1m,
                 000170018693251014m, 0m, 000187655873467410m, 000000000187655873m);
 
@@ -66,7 +66,7 @@ namespace LayoutedReader.Tests.Layouts
         [Test]
         public void record_49()
         {
-            AssertRow(file[48].Record,
+            AssertRow(file.ElementAt(48).Record,
                 "1", new DateTime(2010, 12, 01), 79610005, "CCB", "06D00000414", 1m,
                 000496045836614017m, 0m, 000498113867084281m, 000000000498113867m);
         }

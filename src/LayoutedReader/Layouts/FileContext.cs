@@ -7,12 +7,21 @@ namespace LayoutedReader.Layouts
 {
     public class FileContext<T> : IDisposable, IEnumerable<T>
     {
-
+        public T HeaderContext { get; private set; }
         IEnumerable<T> enumerable;
 
-        public FileContext(IEnumerable<T> enumerable)
+   
+
+        public FileContext(T header, IEnumerable<T> enumerable)
         {
+            this.HeaderContext = header;
             this.enumerable = enumerable;
+        }
+
+
+        public FileContext<T> CompleteInitialize()
+        {
+            return new FileContext<T>(HeaderContext, enumerable.ToList());
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -25,10 +34,13 @@ namespace LayoutedReader.Layouts
             return enumerable.GetEnumerator();
         }
 
+
+
         public void Dispose()
         {
             if (enumerable is IDisposable)
                 (enumerable as IDisposable).Dispose();
         }
+
     }
 }

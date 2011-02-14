@@ -16,7 +16,8 @@ namespace LayoutedReader.Tests.Layouts
 {
     public class LayoutLoaderTests
     {
-        private Stream StreamFor(string content) {
+        private Stream StreamFor(string content)
+        {
             return new MemoryStream(Encoding.UTF8.GetBytes(content));
         }
 
@@ -25,14 +26,22 @@ namespace LayoutedReader.Tests.Layouts
         public void Setup()
         {
             var fs = new Mock<IFileLocator>();
-            fs.Setup(x => x.OpenIndex()).Returns(StreamFor(SampleLayouts.index));
-            fs.Setup(x => x.OpenRelative(@"layouts\A.xml")).Returns(StreamFor(SampleLayouts.test_a_layout));
-            fs.Setup(x => x.OpenRelative(@"layouts\B.xml")).Returns(StreamFor(SampleLayouts.test_b_layout));
-            fs.Setup(x => x.OpenAny(@"A.txt")).Returns(StreamFor(SampleLayouts.test_a));
-            fs.Setup(x => x.OpenAny(@"B.txt")).Returns(StreamFor(SampleLayouts.test_b));
-            fs.Setup(x => x.OpenAny(@"B2.txt")).Returns(StreamFor(SampleLayouts.test_b));
+            fs.Setup(x => x.OpenIndex()).Returns(() => StreamFor(SampleLayouts.index));
+            fs.Setup(x => x.OpenRelative(@"layouts\A.xml")).Returns(() => StreamFor(SampleLayouts.test_a_layout));
+            fs.Setup(x => x.OpenRelative(@"layouts\B.xml")).Returns(() => StreamFor(SampleLayouts.test_b_layout));
+            fs.Setup(x => x.OpenAny(@"A.txt")).Returns(() => StreamFor(SampleLayouts.test_a));
+            fs.Setup(x => x.OpenAny(@"B.txt")).Returns(() => StreamFor(SampleLayouts.test_b));
+            fs.Setup(x => x.OpenAny(@"B2.txt")).Returns(() => StreamFor(SampleLayouts.test_b));
 
             loader = new FileLoader(fs.Object);
+        }
+
+        [Test]
+        public void can_read_twice_same_file_with_same_enumerable()
+        {
+            var A = loader.Read(@"A.txt");
+            A.Count().Should().Be(49);
+            A.Count().Should().Be(49);
         }
 
         [Test]

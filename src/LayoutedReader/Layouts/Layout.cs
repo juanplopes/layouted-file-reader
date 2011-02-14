@@ -31,19 +31,27 @@ namespace LayoutedReader.Layouts
             long estimatedTotal = stream.Length / (Fields.Sum(x => x.Length) + 1);
             
             var stopwatch = Stopwatch.StartNew();
-
             var reader = new StreamReader(stream);
+
+            var headerCtx = ReadHeaderContext(reader, estimatedTotal, stopwatch);
+
+            return new FileContext<RecordContext>(headerCtx,
+                EnumerateReader(reader).Select((row, i) =>
+                ReadRecordContext(stream, estimatedTotal, stopwatch, headerCtx, row, i)));
+        }
+
+        private RecordContext ReadRecordContext(Stream stream, long estimatedTotal, Stopwatch stopwatch, RecordContext headerCtx, string row, int i)
+        {
+            return new RecordContext(headerCtx, row, Read(row, Fields, string.Format("row#{0}", i + 1)), i + 1, estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed);
+        }
+
+        private RecordContext ReadHeaderContext(StreamReader reader, long estimatedTotal, Stopwatch stopwatch)
+        {
+            var stream = reader.BaseStream;
             var headerRow = reader.ReadLine();
             var header = Read(headerRow, HeaderFields, "header");
-            var headerCtx = new RecordContext(null, headerRow, header, 0, estimatedTotal, 
+            return new RecordContext(null, headerRow, header, 0, estimatedTotal,
                 stream.Position, stream.Length, stopwatch.Elapsed);
-
-
-
-            return new FileContext<RecordContext>(
-                EnumerateReader(reader).Select((row, i) =>
-                new RecordContext(headerCtx, row, Read(row, Fields, string.Format("row#{0}", i + 1)), i + 1, estimatedTotal, stream.Position, stream.Length, stopwatch.Elapsed)));
-
         }
 
         private IEnumerable<string> EnumerateReader(TextReader reader)

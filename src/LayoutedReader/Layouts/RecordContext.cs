@@ -10,10 +10,7 @@ namespace LayoutedReader.Layouts
     public class RecordContext
     {
         public RecordContext HeaderContext { get; set; }
-        public ValueBag Header
-        {
-            get { return HeaderContext != null ? HeaderContext.Record : null; }
-        }
+       
 
         public ValueBag Record { get; private set; }
         public long Count { get; private set; }

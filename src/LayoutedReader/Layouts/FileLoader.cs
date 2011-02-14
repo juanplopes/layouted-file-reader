@@ -36,19 +36,32 @@ namespace LayoutedReader.Layouts
 
         public FileContext<DeployContext> Read(string file)
         {
-            return new FileContext<DeployContext>(ReadPrivate(file));
+            DeployContext header;
+            using (var stream = locator.OpenAny(file))
+                header = OpenFile(file, stream).HeaderContext;
+
+            return new FileContext<DeployContext>(header, GetEnumerator(file));            
         }
 
-        private IEnumerable<DeployContext> ReadPrivate(string file)
+        public IEnumerable<DeployContext> GetEnumerator(string file)
         {
+            
+
             using (var stream = locator.OpenAny(file))
             {
-                var layout = OpenXml<Layout>(mappings.LayoutFor(file));
-                var deploy = OpenXml<Filter>(mappings.DeployFor(file));
-
-                foreach (var ctx in new Deployer(layout, deploy).Read(stream))
-                    yield return ctx;
+                var items = OpenFile(file, stream);
+                foreach (var item in items)
+                    yield return item;
             }
         }
+
+        private FileContext<DeployContext> OpenFile(string file, Stream stream)
+        {
+            var layout = OpenXml<Layout>(mappings.LayoutFor(file));
+            var deploy = OpenXml<Filter>(mappings.DeployFor(file));
+            var items = new Deployer(layout, deploy).Read(stream);
+            return items;
+        }
+
     }
 }
