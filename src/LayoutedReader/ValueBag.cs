@@ -56,6 +56,11 @@ namespace LayoutedReader
                 return default(T);
         }
 
+        public IEnumerable<object> ValuesOf(params string[] names)
+        {
+            return names.Select(x => GetAs<object>(x)).ToArray();
+        }
+
         public static ValueBag Create(params Expression<Func<object, object>>[] exprs)
         {
             return new ValueBag(

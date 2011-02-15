@@ -20,6 +20,21 @@ namespace LayoutedReader.Tests
         }
 
         [Test]
+        public void getting_values_of_several_keys_work_if_all_keys_are_present()
+        {
+            var dic = ValueBag.Create(asd => 123, qwe => 234);
+            dic.ValuesOf("asd", "qwe").Should().Have.SameSequenceAs(123, 234);
+        }
+
+        [Test]
+        public void getting_values_of_several_keys_work_even_if_not_all_keys_are_present()
+        {
+            var dic = ValueBag.Create(asd => 123, qwe => 234);
+            dic.ValuesOf("asd", "qwe", "wer")
+                .Should().Have.SameSequenceAs(123, 234, null);
+        }
+
+        [Test]
         public void passing_correct_case_key_will_cast_correct_class()
         {
             var dic = new ValueBag { { "asd", new ValueItem("qwe") } };
